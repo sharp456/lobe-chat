@@ -1,32 +1,6 @@
-import { debounce } from 'lodash-es';
-import { startTransition, useCallback, useEffect, useState } from 'react';
-
-import { encodeAsync } from '@/utils/tokenizer';
-
-export const useTokenCount = (input: string = '') => {
-  const [value, setNum] = useState(0);
-
-  const debouncedEncode = useCallback(
-    debounce((text: string) => {
-      encodeAsync(text)
-        .then(setNum)
-        .catch(() => {
-          setNum(text.length);
-        });
-    }, 300),
-    [],
-  );
-
-  useEffect(() => {
-    startTransition(() => {
-      debouncedEncode(input || '');
-    });
-
-    // 清理函数
-    return () => {
-      debouncedEncode.cancel();
-    };
-  }, [input, debouncedEncode]);
-
-  return value;
+// 保持向后兼容的函数签名，但始终返回0以提高性能
+export const useTokenCount = (_input?: string) => {
+  // 忽略参数以避免未使用变量警告
+  void _input;
+  return 0;
 };
